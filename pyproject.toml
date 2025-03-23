@@ -48,22 +48,6 @@ filterwarnings = ["error"]
 [tool.ruff]
 target-version = "py312"
 line-length = 88
-select = [
-    "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
-    "F",    # pyflakes
-    "I",    # isort
-    "C",    # flake8-comprehensions
-    "B",    # flake8-bugbear
-    "UP",   # pyupgrade
-    "RUF",  # ruff-specific rules
-    "TID",  # flake8-tidy-imports
-    "TCH",  # flake8-type-checking
-    "ERA",  # eradicate
-]
-
-[tool.ruff.isort]
-known-first-party = ["python_cli_ddd"]
 
 [tool.ruff.lint]
 select = [
@@ -80,6 +64,9 @@ select = [
     "SIM", # flake8-simplify
     "ERA", # eradicate
     "PL",  # pylint
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "TC",  # flake8-type-checking
 ]
 ignore = [
     "N803",  # argument name should be lowercase
