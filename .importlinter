@@ -1,0 +1,30 @@
+[importlinter]
+root_package = python_cli_ddd
+
+[importlinter:contract:1]
+name = Layer dependencies
+type = forbidden
+source_modules=
+    python_cli_ddd.domain
+forbidden_modules=
+    python_cli_ddd.application
+    python_cli_ddd.infrastructure
+    python_cli_ddd.interface
+
+[importlinter:contract:2]
+name = Infrastructure dependencies
+type = forbidden
+source_modules=
+    python_cli_ddd.application
+forbidden_modules=
+    python_cli_ddd.infrastructure
+
+[importlinter:contract:3]
+name = Interface dependencies
+type = forbidden
+source_modules=
+    python_cli_ddd.domain
+    python_cli_ddd.application
+    python_cli_ddd.infrastructure
+forbidden_modules=
+    python_cli_ddd.interface
