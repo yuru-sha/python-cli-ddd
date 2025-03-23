@@ -8,7 +8,9 @@ from typing import cast
 
 from dependency_injector import containers, providers
 
-from python_cli_ddd.application.usecases.message.print_message_usecase import PrintMessageUseCase
+from python_cli_ddd.application.usecases.message.print_message_usecase import (
+    PrintMessageUseCase,
+)
 from python_cli_ddd.core.config.interfaces import ConfigInterface
 from python_cli_ddd.core.di.interfaces import DIContainer, UseCaseProvider
 from python_cli_ddd.infrastructure.config.settings import Settings

@@ -17,11 +17,15 @@ class Logger:
         self.logger.handlers.clear()
 
         # ログレベルの設定
-        log_level = getattr(logging, settings.get_str("LOG_LEVEL", "INFO"), logging.INFO)
+        log_level = getattr(
+            logging, settings.get_str("LOG_LEVEL", "INFO"), logging.INFO
+        )
         self.logger.setLevel(log_level)
 
         # フォーマッターの作成
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
 
         # コンソールハンドラーの設定
         console_handler = logging.StreamHandler(sys.stdout)

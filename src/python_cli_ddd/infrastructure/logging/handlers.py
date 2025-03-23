@@ -20,7 +20,9 @@ class DefaultLogger(LoggerInterface):
         self.logger.setLevel(log_level)
 
         # フォーマッターの作成
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
 
         # コンソールハンドラーの設定
         console_handler = logging.StreamHandler(sys.stdout)

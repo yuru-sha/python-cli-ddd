@@ -2,7 +2,9 @@ import argparse
 
 from typing import TYPE_CHECKING
 
-from python_cli_ddd.application.usecases.message.print_message_usecase import PrintMessageInput
+from python_cli_ddd.application.usecases.message.print_message_usecase import (
+    PrintMessageInput,
+)
 from python_cli_ddd.infrastructure.di.container import ApplicationContainer
 from python_cli_ddd.infrastructure.logging.logger import logger
 
