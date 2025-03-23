@@ -30,12 +30,12 @@ class ApplicationContainer(containers.DeclarativeContainer, DIContainer):
     @property
     def config(self) -> ConfigInterface:
         """設定プロバイダー"""
-        return cast(ConfigInterface, self._config())
+        return cast("ConfigInterface", self._config())
 
     @property
     def print_message_usecase(self) -> UseCaseProvider:
         """メッセージ出力ユースケースのプロバイダー"""
-        return cast(UseCaseProvider, self._print_message_usecase)
+        return cast("UseCaseProvider", self._print_message_usecase)
 
     def init_resources(self) -> None:
         """コンテナのリソースを初期化する"""
