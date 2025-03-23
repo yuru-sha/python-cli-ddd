@@ -1,25 +1,30 @@
 from dataclasses import dataclass
 
-from ....domain.models.message import Message
+from python_cli_ddd.domain.models.message import Message
 
 
 @dataclass
 class PrintMessageInput:
+    """メッセージ出力ユースケースの入力値オブジェクト"""
+
     message: str
 
 
 @dataclass
 class PrintMessageOutput:
+    """メッセージ出力ユースケースの出力値オブジェクト"""
+
     formatted_message: str
     timestamp: str
 
 
 class PrintMessageUseCase:
-    def execute(self, input_data: PrintMessageInput) -> PrintMessageOutput:
-        # ドメインオブジェクトの作成
-        message = Message.create(content=input_data.message)
+    """メッセージを出力するユースケース"""
 
-        # 出力の作成
+    def execute(self, input_data: PrintMessageInput) -> PrintMessageOutput:
+        """ユースケースを実行する"""
+        message = Message.create(content=input_data.message)
         return PrintMessageOutput(
-            formatted_message=message.content, timestamp=message.created_at.isoformat()
+            formatted_message=message.format_message(),
+            timestamp=message.timestamp.isoformat(),
         )

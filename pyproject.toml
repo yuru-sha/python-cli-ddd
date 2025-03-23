@@ -8,6 +8,9 @@ authors = [
 dependencies = [
     "click>=8.1.8",
     "python-dotenv>=1.0.1",
+    "dependency-injector>=4.41.0",
+    "SQLAlchemy>=2.0.0",
+    "tabulate>=0.9.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -15,13 +18,16 @@ license = {text = "MIT"}
 
 [project.optional-dependencies]
 dev = [
-    "ruff>=0.9.0",
-    "mypy>=1.15.0",
-    "pytest>=8.3.5",
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.9.0",
+    "ruff>=0.3.0",
+    "types-tabulate>=0.9.0",
 ]
 
 [project.scripts]
 print-message = "python_cli_ddd.interface.cli.print_message_command:main"
+list-tasks = "python_cli_ddd.interface.cli.list_tasks_command:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -33,20 +39,74 @@ packages = ["src/python_cli_ddd"]
 [tool.hatch.metadata]
 allow-direct-references = true
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra -q"
+filterwarnings = ["error"]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 88
 select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "C",    # flake8-comprehensions
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "RUF",  # ruff-specific rules
+    "TID",  # flake8-tidy-imports
+    "TCH",  # flake8-type-checking
+    "ERA",  # eradicate
+]
+
+[tool.ruff.isort]
+known-first-party = ["python_cli_ddd"]
+
+[tool.ruff.lint]
+select = [
     "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
     "F",   # pyflakes
     "I",   # isort
-    "C",   # flake8-comprehensions
-    "B",   # flake8-bugbear
+    "W",   # pycodestyle warnings
+    "N",   # pep8-naming
     "UP",  # pyupgrade
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "RUF", # Ruff-specific rules
+    "PTH", # flake8-use-pathlib
+    "SIM", # flake8-simplify
+    "ERA", # eradicate
+    "PL",  # pylint
 ]
-ignore = []
+ignore = [
+    "N803",  # argument name should be lowercase
+    "N806",  # variable in function should be lowercase
+    "N802",  # function name should be lowercase
+    "N999",  # invalid module name
+    "N817",  # camelcase imported as acronym
+    "E501",  # line too long
+    "N805",  # first argument of a method should be named 'self'
+    "F821",  # undefined name
+    "PLR0913", # too many arguments to function call
+]
 
+# isort設定
+[tool.ruff.lint.isort]
+known-first-party = ["python_cli_ddd"]
+order-by-type = true
+combine-as-imports = true
+split-on-trailing-comma = true
+lines-between-types = 1
+relative-imports-order = "closest-to-furthest"
+
+# import設定
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # unused imports in __init__.py
+
+# フォーマット設定
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
@@ -55,13 +115,15 @@ line-ending = "auto"
 
 [tool.mypy]
 python_version = "3.12"
+strict = true
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+disallow_incomplete_defs = true
 check_untyped_defs = true
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-addopts = "-ra -q"
-filterwarnings = ["error"]
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true

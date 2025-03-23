@@ -1,10 +1,11 @@
 import logging
 import sys
+
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from ...core.config.interfaces import ConfigInterface
-from ...core.logging.interfaces import LoggerInterface
+from python_cli_ddd.core.config.interfaces import ConfigInterface
+from python_cli_ddd.core.logging.interfaces import LoggerInterface
 
 
 class DefaultLogger(LoggerInterface):
@@ -19,9 +20,7 @@ class DefaultLogger(LoggerInterface):
         self.logger.setLevel(log_level)
 
         # フォーマッターの作成
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
         # コンソールハンドラーの設定
         console_handler = logging.StreamHandler(sys.stdout)
@@ -29,18 +28,17 @@ class DefaultLogger(LoggerInterface):
         self.logger.addHandler(console_handler)
 
         # ファイルハンドラーの設定
-        log_dir = Path(config.get_str("LOG_DIR"))
-        if log_dir:
-            log_dir.mkdir(parents=True, exist_ok=True)
+        log_dir = Path(config.get_str("LOG_DIR", str(Path.cwd() / "logs")))
+        log_dir.mkdir(parents=True, exist_ok=True)
 
-            file_handler = RotatingFileHandler(
-                log_dir / "app.log",
-                maxBytes=1024 * 1024,  # 1MB
-                backupCount=5,
-                encoding="utf-8",
-            )
-            file_handler.setFormatter(formatter)
-            self.logger.addHandler(file_handler)
+        file_handler = RotatingFileHandler(
+            log_dir / "app.log",
+            maxBytes=1024 * 1024,  # 1MB
+            backupCount=5,
+            encoding="utf-8",
+        )
+        file_handler.setFormatter(formatter)
+        self.logger.addHandler(file_handler)
 
     def debug(self, message: str) -> None:
         self.logger.debug(message)

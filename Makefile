@@ -13,6 +13,7 @@ clean: ## 一時ファイル、キャッシュ、ビルドアーティファク�
 	rm -rf .pytest_cache/
 	rm -rf .mypy_cache/
 	rm -rf .ruff_cache/
+	rm -rf .import_linter_cache/
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	find . -type f -name "*.pyo" -delete
@@ -32,12 +33,13 @@ setup-dev: ## 開発環境用の依存関係をインストール
 
 lint: ## コードの静的解析を実行（ruff, mypy）
 	@echo "🔍 Running linters..."
-	ruff check --fix .
-	mypy src/python_cli_ddd
+	uv run ruff check --statistics src
+	uv run mypy src
+	PYTHONPATH=src lint-imports
 	@echo "✅ Linting complete!"
 
 format: ## コードのフォーマットをチェック（ruff format --check）
 	@echo "🔍 Checking code format..."
-	ruff format --check .
-	ruff format .
+	uv run ruff format src
+	uv run ruff check --fix src
 	@echo "✅ Format complete!"

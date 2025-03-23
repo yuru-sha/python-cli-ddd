@@ -1,29 +1,25 @@
-
-from ...core.config.interfaces import ConfigInterface
-from ...infrastructure.config.settings import settings
-from ...infrastructure.logging.handlers import DefaultLogger
-from .interfaces import LoggerInterface
+from python_cli_ddd.core.logging.interfaces import LoggerInterface
+from python_cli_ddd.infrastructure.config.settings import settings
+from python_cli_ddd.infrastructure.logging.handlers import DefaultLogger
 
 
-class LoggerFactory:
-    """ロガーのファクトリクラス"""
+class Logger:
+    """アプリケーションのロガーファクトリー"""
 
     _instance: LoggerInterface | None = None
 
     @classmethod
-    def get_logger(cls, config: ConfigInterface | None = None) -> LoggerInterface:
+    def get_logger(cls) -> LoggerInterface:
         """ロガーのインスタンスを取得する"""
         if cls._instance is None:
-            if config is None:
-                config = settings
-            cls._instance = DefaultLogger(config)
+            cls._instance = DefaultLogger(settings)
         return cls._instance
 
     @classmethod
     def reset(cls) -> None:
-        """ロガーのインスタンスをリセットする（主にテスト用）"""
+        """ロガーのインスタンスをリセットする (主にテスト用)"""
         cls._instance = None
 
 
 # 簡単にアクセスできるようにするためのショートカット
-logger = LoggerFactory.get_logger()
+logger = Logger.get_logger()

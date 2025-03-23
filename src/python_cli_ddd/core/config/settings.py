@@ -1,3 +1,9 @@
+"""アプリケーション設定モジュール
+
+このモジュールは、アプリケーション全体の設定を管理します。
+環境変数やconfigファイルからの設定読み込みを担当します。
+"""
+
 import os
 
 from pathlib import Path
@@ -5,7 +11,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from python_cli_ddd.core.config.interfaces import ConfigInterface
+from .interfaces import ConfigInterface
 
 
 class Settings(ConfigInterface):
