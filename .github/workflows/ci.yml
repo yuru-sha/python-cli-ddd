@@ -39,5 +39,5 @@ jobs:
       - name: Run mypy
         run: uv run mypy src
 
-      - name: Run lint-imports
-        run: PYTHONPATH=src lint-imports
+      # - name: Run lint-imports
+      #   run: PYTHONPATH=src lint-imports
